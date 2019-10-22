@@ -1,11 +1,5 @@
 import React, {useState} from 'react'
-import { userInfo } from 'os'
 import AddCommunityForm from './AddCommunityForm'
-
-//community = {
-// country: id,
-// 
-// }
 
 const Community = (props) =>{
     const [communities, setCommunities] = useState(['los angeles','rowland heights','chino', 'walnut'])
