@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,7 +29,8 @@ function Copyright() {
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: "100vh"
+    height: "100vh",
+    backgroundColor: "#feecd4"
   },
   image: {
     backgroundImage:
@@ -42,14 +43,15 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#feecd4"
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "90%", // Fix IE 11 issue.
     marginTop: theme.spacing(1)
   },
   submit: {
@@ -59,12 +61,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignInSide() {
   const classes = useStyles();
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} elevation={6} square>
         <div className={classes.paper}>
           <Typography variant="h4">
             International Nutrition Status Tracking
@@ -81,6 +84,8 @@ export default function SignInSide() {
               id="email"
               label="Email Address"
               name="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               autoComplete="email"
               autoFocus
             />
@@ -93,6 +98,8 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
               autoComplete="current-password"
             />
             <Button
@@ -104,11 +111,12 @@ export default function SignInSide() {
             >
               Sign In
             </Button>
-            Don't have an account yet? <br />
-            <SignUp />
-            <Box mt={5}>
-              <Copyright />
-            </Box>
+            <br />
+            <Grid item>
+              <Link href="/signup" variant="body2">
+                Don't have an account yet? Sign up here
+              </Link>
+            </Grid>
           </form>
         </div>
       </Grid>
