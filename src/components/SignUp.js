@@ -12,6 +12,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+//redux
+import axios from 'axios'
+import {connect} from 'react-redux'
+import {registerUser} from '../actions/index'
 
 function Copyright() {
   return (
@@ -51,7 +55,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+export function SignUp({registerUser}) {
+  console.log(registerUser)
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -100,6 +105,10 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
+            onClick={(e)=>{e.preventDefault() 
+              console.log(email, password)
+              registerUser({name:email,job:password})
+            }}
             className={classes.submit}
           >
             Sign Up
@@ -119,3 +128,20 @@ export default function SignUp() {
     </Container>
   );
 }
+
+const mapStateToProps = (state) =>{
+return {
+  isFetching: state.isFetching,
+  error: state.error
+}
+
+}
+
+export default connect(mapStateToProps,{registerUser})(SignUp)
+
+// axios
+// .post('https://reqres.in/api/users',{name:email,job:password})
+// .then(res=>console.log(res))
+// .catch(err =>console.log(err))
+
+
