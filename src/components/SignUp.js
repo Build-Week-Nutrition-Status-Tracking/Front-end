@@ -1,152 +1,121 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import axios from "axios";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-// import { DisplayFormikState } from './formikHelper';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 
-const styles = {};
-
-const contactFormEndpoint = process.env.REACT_APP_CONTACT_ENDPOINT;
-
-function Contact(props) {
-  const { classes } = props;
-  const [open, setOpen] = useState(false);
-  const [isSubmitionCompleted, setSubmitionCompleted] = useState(false);
-
-  function handleClose() {
-    setOpen(false);
-  }
-
-  function handleClickOpen() {
-    setSubmitionCompleted(false);
-    setOpen(true);
-  }
-
+function Copyright() {
   return (
-    <React.Fragment>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Sign Up
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        {!isSubmitionCompleted && (
-          <React.Fragment>
-            <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Please fill out below to sign up
-              </DialogContentText>
-              <Formik
-                initialValues={{ email: "", name: "" }}
-                onSubmit={(values, { setSubmitting }) => {
-                  setSubmitting(true);
-                  axios
-                    .post(contactFormEndpoint, values, {
-                      headers: {
-                        "Access-Control-Allow-Origin": "*",
-                        "Content-Type": "application/json"
-                      }
-                    })
-                    .then(resp => {
-                      setSubmitionCompleted(true);
-                    });
-                }}
-                validationSchema={Yup.object().shape({
-                  email: Yup.string()
-                    .email()
-                    .required("Required"),
-                  name: Yup.string().required("Required"),
-                  comment: Yup.string().required("Required")
-                })}
-              >
-                {props => {
-                  const {
-                    values,
-                    touched,
-                    errors,
-                    dirty,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    handleReset
-                  } = props;
-                  return (
-                    <form onSubmit={handleSubmit}>
-                      <TextField
-                        error={errors.email && touched.email}
-                        label="Email"
-                        name="email"
-                        className={classes.textField}
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        helperText={
-                          errors.email && touched.email && errors.email
-                        }
-                        margin="normal"
-                      />
-                      <TextField
-                        label="Password"
-                        name="password"
-                        className={classes.textField}
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        helperText={
-                          errors.password && touched.password && errors.password
-                        }
-                        margin="normal"
-                      />
-                      <DialogActions>
-                        <Button
-                          type="button"
-                          className="outline"
-                          onClick={handleReset}
-                          disabled={!dirty || isSubmitting}
-                        >
-                          Reset
-                        </Button>
-                        <Button type="submit" disabled={isSubmitting}>
-                          Submit
-                        </Button>
-                        {/* <DisplayFormikState {...props} /> */}
-                      </DialogActions>
-                    </form>
-                  );
-                }}
-              </Formik>
-            </DialogContent>
-          </React.Fragment>
-        )}
-        {isSubmitionCompleted && (
-          <React.Fragment>
-            <DialogTitle id="form-dialog-title">Thanks!</DialogTitle>
-            <DialogContent>
-              <DialogContentText>Thanks</DialogContentText>
-              <DialogActions>
-                <Button type="button" className="outline" onClick={handleClose}>
-                  Back to app
-                </Button>
-                {/* <DisplayFormikState {...props} /> */}
-              </DialogActions>
-            </DialogContent>
-          </React.Fragment>
-        )}
-      </Dialog>
-    </React.Fragment>
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="/">
+        Nutrition Status Tracking
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
-export default withStyles(styles)(Contact);
+const useStyles = makeStyles(theme => ({
+  "@global": {
+    body: {
+      backgroundColor: theme.palette.common.white
+    }
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
+
+export default function SignUp() {
+  const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="/signin" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}
