@@ -13,6 +13,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import SignUp from "./SignUp";
+//redux
+import {connect} from 'react-redux'
+import {userLogin} from '../actions/index'
 
 function Copyright() {
   return (
@@ -59,10 +62,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignInSide() {
+function SignInSide({userLogin}) {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newUser, setNewUser] = useState({email:'',password:''});
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -84,8 +86,7 @@ export default function SignInSide() {
               id="email"
               label="Email Address"
               name="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => setNewUser({...newUser, email:e.target.value})}
               autoComplete="email"
               autoFocus
             />
@@ -98,8 +99,7 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={e => setNewUser({...newUser, password:e.target.value})}
               autoComplete="current-password"
             />
             <Button
@@ -107,6 +107,10 @@ export default function SignInSide() {
               fullWidth
               variant="contained"
               color="primary"
+              onClick={(e)=>{
+                e.preventDefault()
+                console.log(newUser)
+                userLogin(newUser)}}
               className={classes.submit}
             >
               Sign In
@@ -123,3 +127,12 @@ export default function SignInSide() {
     </Grid>
   );
 }
+
+const mapStateToProps = (state) =>{
+  return {
+    isFetching: state.isFetching,
+    error: state.error
+  }
+}
+
+export default connect(mapStateToProps, {userLogin})(SignInSide)

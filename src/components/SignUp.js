@@ -13,7 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 //redux
-import axios from 'axios'
 import {connect} from 'react-redux'
 import {registerUser} from '../actions/index'
 
@@ -58,8 +57,7 @@ const useStyles = makeStyles(theme => ({
 export function SignUp({registerUser}) {
   console.log(registerUser)
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({email:'',password:''});
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -81,8 +79,7 @@ export function SignUp({registerUser}) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={e => setUser({...user, email:e.target.value})}
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,8 +92,7 @@ export function SignUp({registerUser}) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={e => setUser({...user, password:e.target.value})}
               />
             </Grid>
           </Grid>
@@ -105,9 +101,9 @@ export function SignUp({registerUser}) {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={(e)=>{e.preventDefault() 
-              console.log(email, password)
-              registerUser({name:email,job:password})
+            onClick={(e)=>{e.preventDefault()
+              console.log(user) 
+              registerUser(user)
             }}
             className={classes.submit}
           >
