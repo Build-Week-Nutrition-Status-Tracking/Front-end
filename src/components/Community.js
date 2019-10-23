@@ -77,12 +77,12 @@ export default function Community(props) {
       userCountryId: "1",
       name: "Patricia Bugg",
       gender: "female",
-      age: 9,
       height: 147,
+      weight: 40,
       parentName: "Kiehl Bugg",
       birthday: "07/06/2010",
       contactInfo: "304 834 5834",
-      screenDate: "04/05/2019"
+      screenDate: ["04/05/2019", "03/04/2019"]
     },
     {
       communityId: "2",
@@ -90,12 +90,12 @@ export default function Community(props) {
       userCountryId: "2",
       name: "Rie Act II",
       gender: "male",
-      age: 9,
       height: 120,
+      weight: 50,
       parentName: "Rie Act",
       birthday: "03/06/2010",
       contactInfo: "438 483 7447",
-      screenDate: "02/05/2019"
+      screenDate: ["02/05/2019", "03/09/2019"]
     }
   ]);
   const classes = useStyles();
@@ -142,11 +142,15 @@ export default function Community(props) {
                     <Typography>Parent: {child.parentName}</Typography>
                     <Typography>Contact info: {child.contactInfo}</Typography>
                     <Typography>Height: {child.height}cm</Typography>
-                    <Typography>Screen date: {child.screenDate}</Typography>
+                    <Typography>Weight: {child.weight}cm</Typography>
+                    <Typography>
+                      Last screened date:{" "}
+                      {child.screenDate[child.screenDate.length - 1]}
+                    </Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
-                      <Link href="/child">View</Link>
+                      <Link href={`/child/${child.childId}`}>View</Link>
                     </Button>
                     {CountryId === userId ? (
                       <Button size="small" color="primary">

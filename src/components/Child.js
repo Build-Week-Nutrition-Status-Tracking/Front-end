@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -46,10 +46,38 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Dashboard() {
+export default function Child(props) {
+  const currentChild = props.match.params.id;
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+  const [children, setChildren] = useState([
+    {
+      communityId: "1",
+      childId: "1",
+      userCountryId: "1",
+      name: "Patricia Bugg",
+      gender: "female",
+      height: 147,
+      weight: 40,
+      parentName: "Kiehl Bugg",
+      birthday: "07/06/2010",
+      contactInfo: "304 834 5834",
+      screenDate: ["04/05/2019", "03/04/2019"]
+    },
+    {
+      communityId: "2",
+      childId: "2",
+      userCountryId: "2",
+      name: "Rie Act II",
+      gender: "male",
+      height: 120,
+      weight: 50,
+      parentName: "Rie Act",
+      birthday: "03/06/2010",
+      contactInfo: "438 483 7447",
+      screenDate: ["02/05/2019", "03/09/2019"]
+    }
+  ]);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -60,7 +88,7 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <ChildCard />
+                <ChildCard child={children} />
               </Paper>
             </Grid>
             <Grid item xs={12} md={8} lg={9}>

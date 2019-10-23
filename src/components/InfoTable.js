@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function InfoTable() {
+export default function InfoTable(props) {
   const classes = useStyles();
   return (
     <React.Fragment>

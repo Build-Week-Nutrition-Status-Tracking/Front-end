@@ -14,24 +14,33 @@ const Communities = props => {
   let user = {
     admin: true
   };
+  let community = {
+    id: 0
+  };
   return (
     <div>
       <h1>{currentCountry}</h1>
       {communities.map(community => (
-        <Box
-          bgcolor="#ffecb3"
-          borderRadius={16}
-          width="40%"
-          height="100%"
-          boxShadow={3}
-          p={2}
-          m={1}
-          mx="auto"
+        <div
+          onClick={() => {
+            props.history.push(`/country/${currentCountry}/${community}`);
+          }}
         >
-          <Typography variant="h5" component="h1">
-            {community}
-          </Typography>
-        </Box>
+          <Box
+            bgcolor="#ffecb3"
+            borderRadius={16}
+            width="40%"
+            height="100%"
+            boxShadow={3}
+            p={2}
+            m={1}
+            mx="auto"
+          >
+            <Typography variant="h5" component="h1">
+              {community}
+            </Typography>
+          </Box>
+        </div>
       ))}
       {user.admin ? (
         <AddCommunityForm
