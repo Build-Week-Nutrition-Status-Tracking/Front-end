@@ -61,6 +61,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ChildrenList() {
+  //get users country ID and compare that to the country id we are in
+  //mock data
+  const userId = 0;
+  const CountryId =0;
   const [children, setChildren] = useState([]);
   const classes = useStyles();
   useEffect(() => {
@@ -85,13 +89,13 @@ export default function ChildrenList() {
         </Toolbar>
       </AppBar>
       <main>
-        <Container maxWidth="sm">
+        {(userId===CountryId)?<Container maxWidth="sm">
           <div className={classes.heroButtons}>
             <Button variant="contained" color="primary">
               Add Child
             </Button>
           </div>
-        </Container>
+        </Container>:<></>}
 
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
@@ -113,9 +117,9 @@ export default function ChildrenList() {
                     <Button size="small" color="primary">
                       <Link href="/child">View</Link>
                     </Button>
-                    <Button size="small" color="primary">
+                    {(CountryId===userId)?<Button size="small" color="primary">
                       Edit
-                    </Button>
+                    </Button>:<></>}
                   </CardActions>
                 </Card>
               </Grid>
