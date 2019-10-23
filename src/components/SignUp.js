@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -13,8 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 //redux
-import {connect} from 'react-redux'
-import {registerUser} from '../actions/index'
+import { connect } from "react-redux";
+import { registerUser } from "../actions/index";
 
 function Copyright() {
   return (
@@ -54,10 +52,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function SignUp({registerUser}) {
-  console.log(registerUser)
+export function SignUp({ registerUser }) {
+  console.log(registerUser);
   const classes = useStyles();
-  const [user, setUser] = useState({email:'',password:''});
+  const [user, setUser] = useState({ email: "", password: "" });
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -79,7 +77,7 @@ export function SignUp({registerUser}) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={e => setUser({...user, email:e.target.value})}
+                onChange={e => setUser({ ...user, email: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -92,7 +90,7 @@ export function SignUp({registerUser}) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={e => setUser({...user, password:e.target.value})}
+                onChange={e => setUser({ ...user, password: e.target.value })}
               />
             </Grid>
           </Grid>
@@ -101,9 +99,10 @@ export function SignUp({registerUser}) {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={(e)=>{e.preventDefault()
-              console.log(user) 
-              registerUser(user)
+            onClick={e => {
+              e.preventDefault();
+              console.log(user);
+              registerUser(user);
             }}
             className={classes.submit}
           >
@@ -125,19 +124,19 @@ export function SignUp({registerUser}) {
   );
 }
 
-const mapStateToProps = (state) =>{
-return {
-  isFetching: state.isFetching,
-  error: state.error
-}
+const mapStateToProps = state => {
+  return {
+    isFetching: state.isFetching,
+    error: state.error
+  };
+};
 
-}
-
-export default connect(mapStateToProps,{registerUser})(SignUp)
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(SignUp);
 
 // axios
 // .post('https://reqres.in/api/users',{name:email,job:password})
 // .then(res=>console.log(res))
 // .catch(err =>console.log(err))
-
-
