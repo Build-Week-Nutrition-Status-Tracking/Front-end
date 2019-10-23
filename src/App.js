@@ -3,8 +3,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import Signin from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import Community from "./components/Community";
+import CommunityTesting from "./components/CommunityTesting";
 import { Link, Route } from "react-router-dom";
+import Child from "./components/Child";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Link to="/signin">Sign In</Link>
       <Route exact path="/signin" component={Signin}></Route>
       <Route path="/signup" component={SignUp} />
-      <Community />
+      <Child />
+      <CommunityTesting />
     </div>
   );
 }
