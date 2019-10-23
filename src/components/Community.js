@@ -14,6 +14,7 @@ import Link from "@material-ui/core/Link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getThemeProps } from "@material-ui/styles";
+import AddChild from "./AddChild";
 
 function Copyright() {
   return (
@@ -60,42 +61,69 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChildrenList() {
+export default function Community(props) {
   //get users country ID and compare that to the country id we are in
   //mock data
+  const currentCommunity = props.match.params.id;
   const userId = 0;
-  const CountryId =0;
-  const [children, setChildren] = useState([]);
+  const CountryId = 0;
+  let user = {
+    admin: true
+  };
+  const [children, setChildren] = useState([
+    {
+      communityId: "1",
+      childId: "1",
+      userCountryId: "1",
+      name: "Patricia Bugg",
+      gender: "female",
+      age: 9,
+      height: 147,
+      parentName: "Kiehl Bugg",
+      birthday: "07/06/2010",
+      contactInfo: "304 834 5834",
+      screenDate: "04/05/2019"
+    },
+    {
+      communityId: "2",
+      childId: "2",
+      userCountryId: "2",
+      name: "Rie Act II",
+      gender: "male",
+      age: 9,
+      height: 120,
+      parentName: "Rie Act",
+      birthday: "03/06/2010",
+      contactInfo: "438 483 7447",
+      screenDate: "02/05/2019"
+    }
+  ]);
   const classes = useStyles();
-  useEffect(() => {
-    axios
-      .get("http://hp-api.herokuapp.com/api/characters")
-      .then(res => {
-        console.log(res.data);
-        setChildren(res.data);
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
-  }, []);
+
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Community Page
+            {currentCommunity}
           </Typography>
         </Toolbar>
       </AppBar>
       <main>
-        {(userId===CountryId)?<Container maxWidth="sm">
-          <div className={classes.heroButtons}>
-            <Button variant="contained" color="primary">
-              Add Child
-            </Button>
-          </div>
-        </Container>:<></>}
+        {userId === CountryId ? (
+          <Container maxWidth="sm">
+            <div className={classes.heroButtons}>
+              {user.admin ? (
+                <AddChild setChildren={setChildren} children={children} />
+              ) : (
+                <></>
+              )}
+            </div>
+          </Container>
+        ) : (
+          <></>
+        )}
 
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
@@ -111,15 +139,22 @@ export default function ChildrenList() {
                     <Typography gutterBottom variant="h5" component="h2">
                       {child.name}
                     </Typography>
-                    <Typography>Child information</Typography>
+                    <Typography>Parent: {child.parentName}</Typography>
+                    <Typography>Contact info: {child.contactInfo}</Typography>
+                    <Typography>Height: {child.height}cm</Typography>
+                    <Typography>Screen date: {child.screenDate}</Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
                       <Link href="/child">View</Link>
                     </Button>
-                    {(CountryId===userId)?<Button size="small" color="primary">
-                      Edit
-                    </Button>:<></>}
+                    {CountryId === userId ? (
+                      <Button size="small" color="primary">
+                        Edit
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                   </CardActions>
                 </Card>
               </Grid>
