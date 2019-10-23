@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 export function SignUp({ registerUser }) {
   console.log(registerUser);
   const classes = useStyles();
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [user, setUser] = useState({ username: "", password: "" });
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -73,11 +73,11 @@ export function SignUp({ registerUser }) {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={e => setUser({ ...user, email: e.target.value })}
+                id="username"
+                label="username"
+                name="username"
+                autoComplete="username"
+                onChange={e => setUser({ ...user, username: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>

@@ -3,7 +3,7 @@ import axios from 'axios'
 const axiosWithAuth = () =>{
     const token = localStorage.getItem('token')
     return axios.create({
-        baseURL:'https://reqres.in/api/',//placeholder for server 
+        baseURL:'https://backend-nutrition-tracker.herokuapp.com',//placeholder for server 
         headers:{
             Authorization: token
         }
