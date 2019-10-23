@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Title from "./Title";
 
-// Generate Order Data
+// Generate Data
 function createData(id, date, height, weight) {
   return { id, date, height, weight };
 }
