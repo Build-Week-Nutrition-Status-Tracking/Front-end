@@ -13,7 +13,6 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { getThemeProps } from "@material-ui/styles";
 import AddChild from "./AddChild";
 
 function Copyright() {
