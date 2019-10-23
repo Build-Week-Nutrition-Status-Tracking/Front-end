@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddChild = ({ setChildren, children }) => {
+const AddScreenRecord = ({ setChildren, children }) => {
   // for list of children
   const [child, setChild] = useState({ name: "", parentName: "" }); // for individual child, please add more info to child once back end is set up
   const submitForm = event => {

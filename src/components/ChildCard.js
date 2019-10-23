@@ -12,24 +12,19 @@ const useStyles = makeStyles({
 
 export default function ChildCard(props) {
   const classes = useStyles();
+  console.log(props);
 
   return (
     <React.Fragment>
-      <Title>Child Id</Title>
       <Typography component="p" variant="h4">
-        Child Name
+        Child Name: {props.child.name}
       </Typography>
       <Typography color="textSecondary" className={classes.childContext}>
-        Child Info
+        Contact Info: {props.child.contactInfo}
       </Typography>
       <Typography component="p" variant="h5">
-        blah blah
+        Parent Name: {props.child.parentName}
       </Typography>
-      <div>
-        <Link color="primary" href="javascript:;">
-          View record
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
