@@ -7,7 +7,6 @@ import Signin from "./components/SignIn";
 import SignUp from "./components/SignUp";
 
 import CommunityTesting from "./components/CommunityTesting";
-import { Link, Route } from "react-router-dom";
 import Child from "./components/Child";
 import Communities from './components/Communities'
 import Countries from './components/Countries'
@@ -20,8 +19,8 @@ function App() {
       <Route exact path="/signin" component={Signin}></Route>
       <Route path="/signup" component={SignUp} />
 
-      <Child />
-      <CommunityTesting />
+      <Route exact path= '/community' component={CommunityTesting}></Route>
+      <Route path='/child' component={Child} />
       <Route path='/homepage' component={Countries}/>
       <Route path='/country/:id' component={Communities}/>
 
