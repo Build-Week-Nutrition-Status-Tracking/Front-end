@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getThemeProps } from "@material-ui/styles";
 
 function Copyright() {
   return (
@@ -84,28 +85,17 @@ export default function ChildrenList() {
         </Toolbar>
       </AppBar>
       <main>
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="contained" color="primary">
-                    Add Child
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Test Button
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container>
-        </div>
+        <Container maxWidth="sm">
+          <div className={classes.heroButtons}>
+            <Button variant="contained" color="primary">
+              Add Child
+            </Button>
+          </div>
+        </Container>
+
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4}>
-            {children.map(card => (
+            {children.map(child => (
               <Grid item xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
@@ -115,13 +105,13 @@ export default function ChildrenList() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
+                      {child.name}
                     </Typography>
                     <Typography>Child information</Typography>
                   </CardContent>
                   <CardActions>
                     <Button size="small" color="primary">
-                      View
+                      <Link href="/child">View</Link>
                     </Button>
                     <Button size="small" color="primary">
                       Edit
@@ -133,11 +123,10 @@ export default function ChildrenList() {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
+
       <footer className={classes.footer}>
         <Copyright />
       </footer>
-      {/* End footer */}
     </React.Fragment>
   );
 }

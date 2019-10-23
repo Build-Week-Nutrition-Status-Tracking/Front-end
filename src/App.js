@@ -1,10 +1,14 @@
 import React from "react";
 import "./App.css";
+
 import Signin from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import CommunityTesting from "./components/CommunityTesting";
+
+import Community from "./components/Community";
 import { Link, Route } from "react-router-dom";
 import Child from "./components/Child";
+import Communities from "./components/Communities";
+import Countries from "./components/Countries";
 
 function App() {
   return (
@@ -17,8 +21,10 @@ function App() {
       <Link to="/child">ChildPage</Link>
       <Route exact path="/signin" component={Signin}></Route>
       <Route path="/signup" component={SignUp} />
-      <Route exact path="/community" component={CommunityTesting}></Route>
+      <Route exact path="/community" component={Community}></Route>
       <Route path="/child" component={Child} />
+      <Route path="/homepage" component={Countries} />
+      <Route path="/country/:id" component={Communities} />
     </div>
   );
 }
