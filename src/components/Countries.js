@@ -1,27 +1,68 @@
-import React, {useState} from 'react'
-import AddCountryForm from './AddCountryForm'
-import styled from 'styled-components'
+import React, { useState } from "react";
+import AddCountryForm from "./AddCountryForm";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
-const CountryDiv = styled.div`
-cursor: pointer;
-`
-
-const Countries = (props) =>{
-    const [countries, setCountries] = useState(['Brazil','Peru','Ecuador', 'Colombia'])
-    let user = {
-        admin: true,
-        id: 1
-    }
-    let country = {
-        id:0
-    }
-    return(
+const Countries = props => {
+  const [countries, setCountries] = useState([
+    "Brazil",
+    "East Timor",
+    "Peru",
+    "Ecuador",
+    "Cambodia",
+    "Pakistan",
+    "Colombia",
+    "Nepal",
+    "Mexico",
+    "Nigeria",
+    "Morocco",
+    "Brunei"
+  ]);
+  let user = {
+    admin: true,
+    id: 1
+  };
+  let country = {
+    id: 0
+  };
+  return (
     <div>
-        <h1>Country Page</h1>
-         {countries.map(country=><CountryDiv onClick={()=>{props.history.push(`/country/${country}`)}}><h3>{country}</h3></CountryDiv>)}
-         {(user.id===country.id)?<AddCountryForm setCountries={setCountries} countries={countries}/>:<></>}
-    </div>
-    )
-}
+      <Box p={3}>
+        <Typography variant="h3" noWrap>
+          Country Page
+        </Typography>
+      </Box>
 
-export default Countries
+      {countries.map(country => (
+        <div
+          onClick={() => {
+            props.history.push(`/country/${country}`);
+          }}
+        >
+          <Box
+            bgcolor="#ffecb3"
+            borderRadius={16}
+            width="40%"
+            height="100%"
+            boxShadow={3}
+            p={2}
+            m={1}
+            mx="auto"
+          >
+            <Typography variant="h5" component="h1">
+              {country}
+            </Typography>
+          </Box>
+        </div>
+      ))}
+
+      {user.id === country.id ? (
+        <AddCountryForm setCountries={setCountries} countries={countries} />
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+};
+
+export default Countries;
