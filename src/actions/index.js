@@ -17,6 +17,9 @@ export const CHILD_FAIL = 'CHILD_FAIL'
 export const COMMUNITY_START = 'COMMUNITY_START'
 export const COMMUNITY_SUCCESS = 'COMMUNITY_SUCCESS'
 export const COMMUNITY_FAIL = 'COMMUNITY_FAIL'
+export const COMMUNITY_POST_START = 'COMMUNITY_POST_START'
+export const COMMUNITY_POST_SUCCESS = 'COMMUNITY_POST_SUCCESS'
+export const COMMUNITY_POST_FAIL = 'COMMUNITY_POST_FAIL'
 export const USER_UPDATE_START = 'USER_UPDATE_START'
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS'
 export const USER_UPDATE_FAIL = 'USER_UPDATE_FAIL'
@@ -83,6 +86,15 @@ export const getCommunity = (id)=> dispatch =>{
     .then(res=>{console.log(res)
         dispatch({type:COMMUNITY_SUCCESS, payload:res.data})})
     .catch(err=>{dispatch({type:COMMUNITY_FAIL, payload:err.response})})
+}
+
+export const postCommunity = () => dispatch =>{
+    // dispatch({type:COMMUNITY_POST_START});
+    // axiosWithAuth()
+    // .post(`/screenings/country/${}/communities`)
+    // .then(res=>{console.log(res)
+    // dispatch({type:COMMUNITY_POST_SUCCESS, payload:res.data})})
+    // .catch(err=>{dispatch({type:COMMUNITY_POST_FAIL, payload:err.response})})
 }
 
 
