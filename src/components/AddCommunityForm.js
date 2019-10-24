@@ -10,8 +10,8 @@ const AddCommunityForm = ({setCommunities, communities})=>{
     }
     return(
     <form>
-        <input name='community' onChange={(e)=>{setCommunity(e.target.value)}} placeholder='Country' value={community}></input>
-        <button onClick={(e)=>{submitForm(e)}}>Add Country</button>
+        <input name='community' onChange={(e)=>{setCommunity(e.target.value)}} placeholder='Community' value={community}></input>
+        <button onClick={(e)=>{submitForm(e)}}>Add Community!</button>
     </form>
     )
 }
