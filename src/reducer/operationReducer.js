@@ -1,5 +1,5 @@
-import {COUNTRY_START, COUNTRY_SUCCESS, COUNTRY_FAIL, CHILD_START, CHILD_SUCCESS, CHILD_FAIL, USER_UPDATE_START, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, DELETE_CHILD_START, DELETE_CHILD_SUCCESS, DELETE_CHILD_ERROR,
-COMMUNITY_START, COMMUNITY_SUCCESS, COMMUNITY_FAIL} from '../actions/index'
+import {COUNTRY_START, COUNTRY_SUCCESS, COUNTRY_FAIL, CHILD_START, CHILD_SUCCESS, CHILD_FAIL, ADD_CHILD_START, ADD_CHILD_SUCCESS, ADD_CHILD_FAIL, USER_UPDATE_START, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, DELETE_CHILD_START, DELETE_CHILD_SUCCESS, DELETE_CHILD_ERROR,
+COMMUNITY_START, COMMUNITY_SUCCESS, COMMUNITY_FAIL, USER_START, USER_SUCCESS, USER_FAIL} from '../actions/index'
 
 
 
@@ -10,8 +10,8 @@ export const initialState = {
     country:{
         communities:[]
         },
-    children:[]
-
+    children:[],
+    users: []
 }
 
 export default function operationReducer(state=initialState, action){
@@ -79,6 +79,44 @@ export default function operationReducer(state=initialState, action){
             isFetching:false,
             error:action.payload
         })
+        case(ADD_CHILD_START):
+        return({
+            ...state,
+            isFetching:true,
+            error:'',
+        })
+        case(ADD_CHILD_SUCCESS):
+        return({
+            ...state,
+            isFetching:false,
+            error:'',
+            children:[...action.payload]
+        })
+        case(ADD_CHILD_FAIL):
+        return({
+            ...state,
+            isFetching:false,
+            error:action.payload
+        })
+        case(USER_START):
+        return({
+            ...state,
+            isFetching:true,
+            error:''
+        })
+        case(USER_SUCCESS):
+        return({
+            ...state,
+            isFetching:false,
+            error:'',
+            users:[...action.payload]
+        })
+        case(USER_FAIL):
+        return({
+            ...state,
+            isFetching:false,
+            error: action.payload
+        })
         case(USER_UPDATE_START):
         return({
             ...state,
@@ -89,13 +127,14 @@ export default function operationReducer(state=initialState, action){
         return({
             ...state,
             isFetching:false,
-            error:''
+            error:'',
+            user:[...action.payload]
         })
         case(USER_UPDATE_FAIL):
         return({
             ...state,
             isFetching:false,
-            error:'error'
+            error: action.payload
         })
         case(DELETE_CHILD_START):
         return({

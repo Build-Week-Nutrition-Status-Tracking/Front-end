@@ -3,10 +3,9 @@ import AddCountryForm from "./AddCountryForm";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import {connect} from 'react-redux'
-import {getCountry} from '../actions/index'
+import {getCountry, setCountry} from '../actions/index'
 
-const Countries = ({countries, getCountry, history, error}) => {
-  //const [countries, setCountries] = useState(props.getCountry());
+const Countries = ({countries, getCountry, history, error, setCountry}) => {
   useEffect(()=>{
     getCountry()// gets country from backend
   },[])
@@ -40,22 +39,15 @@ const Countries = ({countries, getCountry, history, error}) => {
           </Box>
         </div>
       ))}
-
-      {/* {user.id === country.id ? (
-        <AddCountryForm setCountries={setCountries} countries={countries} />
-      ) : (
-        <></>
-      )} */}
-      
+        <AddCountryForm setCountry={setCountry}/>
     </div>
   );
 };
 
 const mapStateToProps = (state) =>{
-  console.log(state)
 return {
   countries: state.operation.countries
 }
 }
 
-export default connect(mapStateToProps,{getCountry})(Countries);
+export default connect(mapStateToProps,{getCountry, setCountry})(Countries);

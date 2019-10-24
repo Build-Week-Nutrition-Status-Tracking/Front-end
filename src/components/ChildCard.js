@@ -12,7 +12,6 @@ const useStyles = makeStyles({
 
 export default function ChildCard(props) {
   const classes = useStyles();
-  console.log(props);
 
   return (
     <React.Fragment>

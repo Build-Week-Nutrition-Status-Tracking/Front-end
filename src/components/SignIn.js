@@ -112,7 +112,6 @@ function SignInSide({userLogin, history}) {
               color="primary"
               onClick={(e)=>{
                 e.preventDefault()
-                console.log(newUser)
                 userLogin(newUser, history)}}
               className={classes.submit}
             >
