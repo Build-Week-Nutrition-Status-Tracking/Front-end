@@ -64,6 +64,14 @@ export const addCountry = (user)=> dispatch =>{
     .catch(err=>console.log(err))
 }
 
+export const getCountry = (user)=> dispatch =>{
+    dispatch({type:COUNTRY_START});
+    axiosWithAuth()
+    .get('/screenings/country')
+    .then(res=>{dispatch({type:COUNTRY_SUCCESS, payload:res.data})})
+    .catch(err=>console.log(err))
+}
+
 export const updateUser = (user) => dispatch =>{
     dispatch({type:USER_UPDATE_START})
     axiosWithAuth()
