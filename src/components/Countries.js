@@ -10,13 +10,6 @@ const Countries = ({countries, getCountry, history, error}) => {
   useEffect(()=>{
     getCountry()// gets country from backend
   },[])
-  let user = {
-    admin: true,
-    id: 1
-  };
-  // let country = {
-  //   id: 0
-  // };
   return (
     <div>
       <Box p={3}>
@@ -28,7 +21,7 @@ const Countries = ({countries, getCountry, history, error}) => {
       {countries.map(country => (
         <div key={country.id}
           onClick={() => {
-            history.push(`/country/${country.country}`);
+            history.push(`/country/${country.id}`);
           }}
         >
           <Box

@@ -1,11 +1,15 @@
-import {COUNTRY_START, COUNTRY_SUCCESS, COUNTRY_FAIL, CHILD_START, CHILD_SUCCESS, CHILD_FAIL, USER_UPDATE_START, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, DELETE_CHILD_START, DELETE_CHILD_SUCCESS, DELETE_CHILD_ERROR} from '../actions/index'
+import {COUNTRY_START, COUNTRY_SUCCESS, COUNTRY_FAIL, CHILD_START, CHILD_SUCCESS, CHILD_FAIL, USER_UPDATE_START, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, DELETE_CHILD_START, DELETE_CHILD_SUCCESS, DELETE_CHILD_ERROR,
+COMMUNITY_START, COMMUNITY_SUCCESS, COMMUNITY_FAIL} from '../actions/index'
 
 
 
 export const initialState = {
     isFetching: false,
     error:'',
-    countries: []
+    countries: [],
+    country:{
+        communities:[]
+        }
 }
 
 export default function operationReducer(state=initialState, action){
@@ -26,6 +30,29 @@ export default function operationReducer(state=initialState, action){
 
         })
         case(COUNTRY_FAIL):
+        return({
+            ...state,
+            isFetching:false,
+            error:'error'
+        })
+        case(COMMUNITY_START):
+        return({
+            ...state,
+            isFetching:true,
+            error:''
+        })
+        case(COMMUNITY_SUCCESS):
+        console.log(state.country.communities,action.payload)
+        const newState ={
+            ...state,
+            isFetching:false,
+            error:'',
+            country:{communities:[...action.payload]}
+
+        } 
+        console.log(newState)
+        return (newState)
+        case(COMMUNITY_FAIL):
         return({
             ...state,
             isFetching:false,

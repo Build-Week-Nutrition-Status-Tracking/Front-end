@@ -14,12 +14,16 @@ export const COUNTRY_FAIL = 'COUNTRY_FAIL'
 export const CHILD_START = 'CHILD_START'
 export const CHILD_SUCCESS = 'CHILD_SUCCESS'
 export const CHILD_FAIL = 'CHILD_FAIL'
+export const COMMUNITY_START = 'COMMUNITY_START'
+export const COMMUNITY_SUCCESS = 'COMMUNITY_SUCCESS'
+export const COMMUNITY_FAIL = 'COMMUNITY_FAIL'
 export const USER_UPDATE_START = 'USER_UPDATE_START'
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS'
 export const USER_UPDATE_FAIL = 'USER_UPDATE_FAIL'
 export const DELETE_CHILD_START = 'DELETE_CHILD_START'
 export const DELETE_CHILD_SUCCESS = 'DELETE_CHILD_SUCCESS'
 export const DELETE_CHILD_ERROR = 'DELETE_CHILD_ERROR'
+
 
 
 
@@ -69,8 +73,19 @@ export const getCountry = (user)=> dispatch =>{
     axiosWithAuth()
     .get('/screenings/country')
     .then(res=>{dispatch({type:COUNTRY_SUCCESS, payload:res.data})})
-    .catch(err=>console.log(err))
+    .catch(err=>{dispatch({type:COUNTRY_SUCCESS, payload:err.response})})
 }
+
+export const getCommunity = (id)=> dispatch =>{
+    dispatch({type:COMMUNITY_START});
+    axiosWithAuth()
+    .get(`/screenings/country/${id}/communities`)
+    .then(res=>{console.log(res)
+        dispatch({type:COMMUNITY_SUCCESS, payload:res.data})})
+    .catch(err=>{dispatch({type:COMMUNITY_FAIL, payload:err.response})})
+}
+
+
 
 export const updateUser = (user) => dispatch =>{
     dispatch({type:USER_UPDATE_START})
