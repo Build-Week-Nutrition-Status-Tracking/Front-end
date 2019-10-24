@@ -4,10 +4,8 @@ const AddCommunityForm = ({setCommunities, communities, postCommunity})=>{
     //still working on this!
     const [community, setCommunity] = useState('')
     // const currentCountryId = props.match.params.id
-    console.log(postCommunity)
     const submitForm=(e)=>{
         e.preventDefault()
-        console.log(community)
         setCommunities([...communities, community])
         setCommunity('')
     }

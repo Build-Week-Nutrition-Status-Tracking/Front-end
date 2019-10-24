@@ -53,9 +53,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function SignUp({ registerUser }) {
-  console.log(registerUser);
   const classes = useStyles();
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [user, setUser] = useState({username:'',password:'',admin:1});
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -77,7 +76,8 @@ export function SignUp({ registerUser }) {
                 label="username"
                 name="username"
                 autoComplete="username"
-                onChange={e => setUser({ ...user, username: e.target.value })}
+                onChange={e => {console.log(user)
+                  setUser({ ...user, username: e.target.value })}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +93,9 @@ export function SignUp({ registerUser }) {
                 onChange={e => setUser({ ...user, password: e.target.value })}
               />
             </Grid>
+            {/* <label class="switch">Admin
+              <input type='checkbox' onChange={(e)=>{setUser({...user, admin:e.target.checked})}}/>
+            </label> */}
           </Grid>
           <Button
             type="submit"
@@ -101,7 +104,6 @@ export function SignUp({ registerUser }) {
             color="primary"
             onClick={e => {
               e.preventDefault();
-              console.log(user);
               registerUser(user);
             }}
             className={classes.submit}

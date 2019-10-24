@@ -11,13 +11,10 @@ import Loader from 'react-loader-spinner'
 const Communities = ({history, match, communities, getCommunity, isFetching, postCommunity, community}) => {
   const [com, setCom] = useState([])
   const currentCountryId = match.params.id
-  console.log('isFetching',isFetching)
   useEffect(()=>{
     getCommunity(currentCountryId)// gets country from backend
-    console.log('community',communities)
   },[])
 
-  console.log(postCommunity)
 
 
   return isFetching?<></>:
@@ -60,7 +57,6 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
   
 };
 const mapStateToProps = state =>{
-  console.log(state)
   return{
     ...state,
     communities: state.operation.country.communities,

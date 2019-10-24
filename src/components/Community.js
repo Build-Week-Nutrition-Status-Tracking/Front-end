@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import AddChild from "./AddChild";
-import {getChild} from '../actions/index'
+import {getChild, addChild} from '../actions/index'
 import {connect} from 'react-redux' 
 
 function Copyright() {
@@ -69,7 +69,6 @@ function Community({location, getChild, children}) {
   const community = (location.state.community)
   useEffect(()=>{
     getChild(community.id)
-    console.log(children)
   },[])
   
   const userId = 0;
@@ -105,7 +104,7 @@ function Community({location, getChild, children}) {
   //     screenDate: ["02/05/2019", "03/09/2019"]
   //   }
   // ]);
-  console.log(children)
+  
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -122,7 +121,7 @@ function Community({location, getChild, children}) {
           <Container maxWidth="sm">
             <div className={classes.heroButtons}>
               {user.admin ? (
-                <AddChild/>
+                <AddChild addChild={addChild}/>
               ) : (
                 <></>
               )}
@@ -186,4 +185,4 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps,{getChild})(Community)
+export default connect(mapStateToProps,{getChild, addChild})(Community)
