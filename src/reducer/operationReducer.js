@@ -9,7 +9,9 @@ export const initialState = {
     countries: [],
     country:{
         communities:[]
-        }
+        },
+    children:[]
+
 }
 
 export default function operationReducer(state=initialState, action){
@@ -62,19 +64,20 @@ export default function operationReducer(state=initialState, action){
         return({
             ...state,
             isFetching:true,
-            error:''
+            error:'',
         })
         case(CHILD_SUCCESS):
         return({
             ...state,
             isFetching:false,
-            error:''
+            error:'',
+            children:[...action.payload]
         })
         case(CHILD_FAIL):
         return({
             ...state,
             isFetching:false,
-            error:'error'
+            error:action.payload
         })
         case(USER_UPDATE_START):
         return({
