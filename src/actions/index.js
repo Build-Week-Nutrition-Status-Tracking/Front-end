@@ -23,27 +23,29 @@ export const DELETE_CHILD_ERROR = 'DELETE_CHILD_ERROR'
 
 
 
-export const registerUser = (user) => dispatch =>{
+export const registerUser = (user, history) => dispatch =>{
     console.log('register action')
     dispatch({type:SIGN_UP_START});
     axiosWithAuth()
-    .post('register',user)
+    .post('/user/register',user)
     .then(res=>{dispatch({type:SIGN_UP_SUCCESS, payload: res})
         console.log(res)
+        history.push('/signin')
         })
     .catch(err=>{console.log(err.response)
         dispatch({type:SIGN_UP_FAIL, payload: err})})
 }
 
-export const userLogin = (user) => dispatch =>{
+export const userLogin = (user,history) => dispatch =>{
     dispatch({type:LOGIN_START});
     console.log('login action')
     axiosWithAuth()
-    .post('login',user)
+    .post('user/login',user)
     .then(res=>{
         dispatch({type:LOGIN_SUCCESS, payload: res})
         console.log(res)
         localStorage.setItem('token',res.data.token)
+        history.push('/homepage')
         })
     .catch(err=>{
         console.log(err.response)
@@ -59,6 +61,14 @@ export const addCountry = (user)=> dispatch =>{
     axiosWithAuth()
     .post('',user.country.id)
     .then(res=>{console.log(res)})
+    .catch(err=>console.log(err))
+}
+
+export const getCountry = (user)=> dispatch =>{
+    dispatch({type:COUNTRY_START});
+    axiosWithAuth()
+    .get('/screenings/country')
+    .then(res=>{dispatch({type:COUNTRY_SUCCESS, payload:res.data})})
     .catch(err=>console.log(err))
 }
 

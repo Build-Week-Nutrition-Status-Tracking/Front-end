@@ -2,9 +2,10 @@ import {COUNTRY_START, COUNTRY_SUCCESS, COUNTRY_FAIL, CHILD_START, CHILD_SUCCESS
 
 
 
-const initialState = {
+export const initialState = {
     isFetching: false,
     error:'',
+    countries: []
 }
 
 export default function operationReducer(state=initialState, action){
@@ -16,10 +17,13 @@ export default function operationReducer(state=initialState, action){
             error:''
         })
         case(COUNTRY_SUCCESS):
+        console.log(action.payload)
         return({
             ...state,
             isFetching:false,
+            countries:[...action.payload],
             error:''
+
         })
         case(COUNTRY_FAIL):
         return({
@@ -82,7 +86,9 @@ export default function operationReducer(state=initialState, action){
             error:'error'
         })
         default:
-            return(state)
+            return{
+                ...state
+            }
     }
     
 }

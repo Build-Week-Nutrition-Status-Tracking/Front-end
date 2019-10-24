@@ -8,6 +8,7 @@ import Child from "./components/Child";
 import Communities from "./components/Communities";
 import Countries from "./components/Countries";
 import Users from "./components/Users";
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
   return (
@@ -19,10 +20,10 @@ function App() {
       <br />
       <Route exact path="/signin" component={Signin}></Route>
       <Route path="/signup" component={SignUp} />
-      <Route exact path="/country/:id/:id" component={Community}></Route>
-      <Route path="/child/:childId" component={Child} />
-      <Route path="/homepage" component={Countries} />
-      <Route exact path="/country/:id" component={Communities} />
+      <PrivateRoute exact path="/country/:id/:id" component={Community}/>
+      <PrivateRoute path="/child/:childId" component={Child} />
+      <PrivateRoute path="/homepage" component={Countries} />
+      <PrivateRoute exact path="/country/:id" component={Communities} />
       <Route path="/users" component={Users} />
     </div>
   );

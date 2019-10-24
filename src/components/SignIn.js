@@ -62,9 +62,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignInSide({userLogin}) {
+function SignInSide({userLogin, history}) {
+  if (localStorage.getItem('token')){
+    history.push('/homepage')
+  }
   const classes = useStyles();
-  const [newUser, setNewUser] = useState({email:'',password:''});
+  const [newUser, setNewUser] = useState({username:'',password:''});
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -83,11 +86,11 @@ function SignInSide({userLogin}) {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              onChange={e => setNewUser({...newUser, email:e.target.value})}
-              autoComplete="email"
+              id="username"
+              label="username"
+              name="username"
+              onChange={e => setNewUser({...newUser, username:e.target.value})}
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -110,7 +113,7 @@ function SignInSide({userLogin}) {
               onClick={(e)=>{
                 e.preventDefault()
                 console.log(newUser)
-                userLogin(newUser)}}
+                userLogin(newUser, history)}}
               className={classes.submit}
             >
               Sign In

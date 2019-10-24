@@ -1,30 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddCountryForm from "./AddCountryForm";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import {connect} from 'react-redux'
+import {getCountry} from '../actions/index'
 
-const Countries = props => {
-  const [countries, setCountries] = useState([
-    "Brazil",
-    "East Timor",
-    "Peru",
-    "Ecuador",
-    "Cambodia",
-    "Pakistan",
-    "Colombia",
-    "Nepal",
-    "Mexico",
-    "Nigeria",
-    "Morocco",
-    "Brunei"
-  ]);
+const Countries = ({countries, getCountry, history, error}) => {
+  //const [countries, setCountries] = useState(props.getCountry());
+  useEffect(()=>{
+    getCountry()// gets country from backend
+  },[])
   let user = {
     admin: true,
     id: 1
   };
-  let country = {
-    id: 0
-  };
+  // let country = {
+  //   id: 0
+  // };
   return (
     <div>
       <Box p={3}>
@@ -34,9 +26,9 @@ const Countries = props => {
       </Box>
 
       {countries.map(country => (
-        <div
+        <div key={country.id}
           onClick={() => {
-            props.history.push(`/country/${country}`);
+            history.push(`/country/${country.country}`);
           }}
         >
           <Box
@@ -49,20 +41,28 @@ const Countries = props => {
             m={1}
             mx="auto"
           >
-            <Typography variant="h5" component="h1">
-              {country}
+            <Typography key={country.id} variant="h5" component="h1">
+              {country.country}
             </Typography>
           </Box>
         </div>
       ))}
 
-      {user.id === country.id ? (
+      {/* {user.id === country.id ? (
         <AddCountryForm setCountries={setCountries} countries={countries} />
       ) : (
         <></>
-      )}
+      )} */}
+      
     </div>
   );
 };
 
-export default Countries;
+const mapStateToProps = (state) =>{
+  console.log(state)
+return {
+  countries: state.operation.countries
+}
+}
+
+export default connect(mapStateToProps,{getCountry})(Countries);
