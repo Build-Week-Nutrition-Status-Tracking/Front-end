@@ -13,9 +13,12 @@ import PrivateRoute from './components/PrivateRoute'
 function App() {
   return (
     <div className="App">
-      <Link to="/signin">Sign In</Link> <br />
-      <Link to="/signup">Sign Up</Link>
-      <br />
+      
+      {localStorage.getItem('token')?<div onClick={()=>{localStorage.removeItem('token')}}>Logout</div>:<>
+        <Link to="/signin">Sign In</Link> <br />
+        <Link to="/signup">Sign Up</Link>
+        <br />
+      </>}
       <Link to="/homepage">Home Page</Link>
       <br />
       <Route exact path="/signin" component={Signin}></Route>

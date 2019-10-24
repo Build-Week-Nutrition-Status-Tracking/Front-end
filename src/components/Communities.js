@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import AddCommunityForm from "./AddCommunityForm";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import {getCommunity} from '../actions/index'
+import {getCommunity, postCommunity} from '../actions/index'
 import {connect} from 'react-redux'
 import Loader from 'react-loader-spinner'
 
 
 
-const Communities = ({history, match, communities, getCommunity, isFetching, postCommunity}) => {
+const Communities = ({history, match, communities, getCommunity, isFetching, postCommunity, community}) => {
   const [com, setCom] = useState([])
   const currentCountryId = match.params.id
   console.log('isFetching',isFetching)
@@ -17,7 +17,7 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
     console.log('community',communities)
   },[])
 
-  console.log(communities)
+  console.log(postCommunity)
 
 
   return isFetching?<></>:
@@ -27,7 +27,10 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
         <>
           <div
             onClick={() => {
-              history.push(`/country/${currentCountryId}/${community}`);
+              history.push({
+                pathname: `/country/${currentCountryId}/${community.name}`,
+                state:{community}
+              });
             }}
           >
             <Box
@@ -51,6 +54,7 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
         <AddCommunityForm
           setCommunities={setCom}
           communities={com}
+          postCommunity={postCommunity}
         />
     </div>)
   
@@ -60,10 +64,11 @@ const mapStateToProps = state =>{
   return{
     ...state,
     communities: state.operation.country.communities,
-    isFetching: state.operation.isFetching
+    isFetching: state.operation.isFetching,
+    community: state.operation.community
   }
 }
-export default connect(mapStateToProps, {getCommunity})(Communities);
+export default connect(mapStateToProps, {getCommunity, postCommunity})(Communities);
 
 {/* <Loader
   type="Puff"

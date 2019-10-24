@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 
-const AddCommunityForm = ({setCommunities, communities})=>{
+const AddCommunityForm = ({setCommunities, communities, postCommunity})=>{
+    //still working on this!
     const [community, setCommunity] = useState('')
+    // const currentCountryId = props.match.params.id
+    console.log(postCommunity)
     const submitForm=(e)=>{
         e.preventDefault()
         console.log(community)
