@@ -76,8 +76,7 @@ export function SignUp({ registerUser }) {
                 label="username"
                 name="username"
                 autoComplete="username"
-                onChange={e => {console.log(user)
-                  setUser({ ...user, username: e.target.value })}}
+                onChange={e => {setUser({ ...user, username: e.target.value })}}
               />
             </Grid>
             <Grid item xs={12}>

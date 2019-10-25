@@ -20,7 +20,6 @@ const AllUsers = styled.div`
 
 const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
   //axios call to get users --> display their Id, name, admin, country_code
-  console.log(users);
   useEffect(() => {
     getUsers();
   }, []);
@@ -33,7 +32,6 @@ const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
     { id: 5, country: "Mexico" }
   ]);
   const [updatedUser, setUpdatedUser] = useState({admin: 1, user_country_id: 2});
-  console.log(updatedUser)
   const useStyles = makeStyles(theme => ({
     container: {
       display: "flex",
@@ -142,7 +140,6 @@ const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
                 onClick={e => {
                   e.preventDefault();
                   updateUser(1, updatedUser)
-                  admin ? console.log("null") : console.log(e);
                 }}
                 className={classes.submit}
               >

@@ -25,7 +25,6 @@ export default function operationReducer(state=initialState, action){
             error:''
         })
         case(COUNTRY_SUCCESS):
-        console.log(action.payload)
         return({
             ...state,
             isFetching:false,
@@ -46,15 +45,13 @@ export default function operationReducer(state=initialState, action){
             error:''
         })
         case(COMMUNITY_SUCCESS):
-        console.log(state.country.communities,action.payload)
         const newState ={
             ...state,
             isFetching:false,
             error:'',
             country:{communities:[...action.payload]}
 
-        } 
-        console.log(newState)
+        }
         return (newState)
         case(COMMUNITY_FAIL):
         return({
