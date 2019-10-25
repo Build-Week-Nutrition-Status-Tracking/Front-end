@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function SignUp({ registerUser }) {
+export function SignUp({ registerUser, history }) {
   const classes = useStyles();
   const [user, setUser] = useState({username:'',password:'',admin:1});
   return (
@@ -103,7 +103,7 @@ export function SignUp({ registerUser }) {
             color="primary"
             onClick={e => {
               e.preventDefault();
-              registerUser(user);
+              registerUser(user, history);
             }}
             className={classes.submit}
           >
