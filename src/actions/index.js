@@ -142,10 +142,10 @@ export const getUsers = (user) => dispatch =>{
     .catch(err=>dispatch({type:USER_FAIL, payload:err.response}))
 }
 
-export const deleteChild = (user) => dispatch =>{
+export const deleteChild = (id) => dispatch =>{
     dispatch({type:DELETE_CHILD_START})
     axiosWithAuth()
-    .delete('',user)
+    .delete(`/screenings/kids/${id}`)
     .then(res=>console.log(res))
     .catch(err=>console.log(err.response))
 }
@@ -171,3 +171,4 @@ export const getChild = (id) => dispatch =>{
     .catch(err=>{
         dispatch({type:CHILD_FAIL, payload:err.response})})
 }
+
