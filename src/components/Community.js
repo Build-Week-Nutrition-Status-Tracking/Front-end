@@ -68,10 +68,11 @@ function Community({location, getChild, children, addChild, match}) {
   //mock data
   console.log(match)
   console.log(location.state)
-  const [edit, setEdit] = useState(false)
-  console.log(edit)
+  const [editField, setEditField] = useState({edit:false,id:''})
+  console.log(editField)
   const community = (location.state.community)
-  const newKid ={child_name: "uzias",
+  const newKid ={
+  child_name: "uzias",
   parent_name: "bill",
   contact_info: "123",
   gender: "male",
@@ -79,12 +80,23 @@ function Community({location, getChild, children, addChild, match}) {
   height: "62",
   weight: "200",
   date_of_birth:'1/1/2019'}
+  
+const [kidObj, setKidObj] = useState({})
+
+
+  const changeHandler = e =>{
+    e.preventDefault()
+    setKidObj({...kidObj, [e.target.name]:e.target.value})
+  }
 
   useEffect(()=>{
     getChild(community.id)
     // addChild(newKid, community.id)
     
   },[])
+
+console.log(kidObj)
+
   console.log('this is the children format',children)
   const userId = 0;
   const CountryId = 0;
@@ -127,7 +139,19 @@ function Community({location, getChild, children, addChild, match}) {
                     image="https://cdn.dribbble.com/users/1044993/screenshots/6797235/sea-otter_dribbble.png"
                     title="Image title"
                   />
-                  {!edit?<CardContent className={classes.cardContent}>
+                  {(editField.edit&&(child.id===editField.id))?<CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">Name: 
+                  <input name='child_name' value={kidObj.child_name} onChange={(e)=>changeHandler(e)}></input>
+                    </Typography>
+                    <Typography>DOB: <input name='date_of_birth' value={kidObj.date_of_birth} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Parent: <input name='parent_name' value={kidObj.parent_name} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Contact info: <input name='contact_info' value={kidObj.contact_info} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Height: <input name='height' value={kidObj.height} onChange={(e)=>changeHandler(e)}></input>cm</Typography>
+                    <Typography>Weight: <input name='weight' value={kidObj.weight} onChange={(e)=>changeHandler(e)}></input>kg</Typography>
+                    <Typography>Screening: <input name='date_of_screening' value={kidObj.date_of_screening} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Button onClick={()=>{}}>Confirm Edit</Button>
+                  </CardContent>:
+                  <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {child.child_name}
                     </Typography>
@@ -137,22 +161,16 @@ function Community({location, getChild, children, addChild, match}) {
                     <Typography>Height: {child.height}cm</Typography>
                     <Typography>Weight: {child.weight}kg</Typography>
                     <Typography>Screening: {child.date_of_screening}</Typography>
-                  </CardContent>:<CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">Name: 
-                  <input value={child.child_name}></input>
-                    </Typography>
-                    <Typography>DOB: <input value={child.date_of_birth}></input></Typography>
-                    <Typography>Parent: <input value={child.parent_name}></input></Typography>
-                    <Typography>Contact info: <input value={child.contact_info}></input></Typography>
-                    <Typography>Height: <input value={child.height}></input>cm</Typography>
-                    <Typography>Weight: <input value={child.weight}></input>kg</Typography>
-                    <Typography>Screening: <input value={child.date_of_screening}></input></Typography>
                   </CardContent>}
                   <CardActions>
                     <Button size="small" color="primary">
                       <Link href={`/child/${child.id}`}>View</Link>
                     </Button>
-                      <Button onClick={()=>setEdit(!edit)}size="small" color="primary">
+                      <Button onClick={()=>{
+                        setEditField({edit:!editField.edit, id:child.id})
+                        setKidObj({...child})
+                    }}
+                    size="small" color="primary">
                         Edit
                       </Button>
                    
