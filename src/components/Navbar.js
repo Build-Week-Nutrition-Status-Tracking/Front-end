@@ -6,6 +6,13 @@ import {Link} from 'react-router-dom'
 const Nav = styled.div`
 display: flex;
 justify-content: space-around;
+background: rgb(40,143,140);
+padding: 2%;   
+a{
+    color: snow;
+    font-size: 18px;
+    text-decoration: none;
+}
 `
 
 const Navbar = () => {
@@ -16,15 +23,15 @@ const Navbar = () => {
     },[token])
     return (
         <Nav>
-            {localStorage.getItem('token')?<><Link to='/signin' 
+            <Link to="/homepage">Home Page</Link>
+            {(localStorage.getItem('token'))?<><Link to="/users">Users</Link>
+            <Link to='/signin' 
             onClick={()=>{
                 setLogged(!logged)
-                localStorage.removeItem('token')}}>Logout</Link><br></br></>:<>
-            <Link to="/signin">Sign In</Link> <br />
+                localStorage.removeItem('token')}}>Logout</Link></>:<>
+            <Link to="/signin">Sign In</Link>
             <Link to="/signup">Sign Up</Link>
-            <br />
             </>}
-            <Link to="/homepage">Home Page</Link>
         </Nav>
     );
 };

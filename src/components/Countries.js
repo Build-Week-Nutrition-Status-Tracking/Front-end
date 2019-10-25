@@ -39,7 +39,7 @@ const Countries = ({countries, getCountry, history, error, setCountry}) => {
           </Box>
         </div>
       ))}
-        <AddCountryForm setCountry={setCountry}/>
+        <AddCountryForm setCountry={setCountry} getCountry={getCountry}/>
     </div>
   );
 };

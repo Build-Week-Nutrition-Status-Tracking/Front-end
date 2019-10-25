@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 
-const AddCountryForm = ({setCountry})=>{// for list of countries
+const AddCountryForm = ({setCountry, getCountry})=>{// for list of countries
     const [country, setCountryObj] = useState({country:''})// for individual country
     
     const submitForm=(e)=>{
         e.preventDefault()
         setCountry(country)
+        getCountry()
 
     }
     return(

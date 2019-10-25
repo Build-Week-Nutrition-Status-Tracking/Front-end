@@ -57,7 +57,7 @@ export const registerUser = (user, history) => dispatch =>{
     })
 }
 
-export const userLogin = (user,history) => dispatch =>{
+export const userLogin = (user,history, location) => dispatch =>{
     dispatch({type:LOGIN_START});
     console.log('login action')
     axiosWithAuth()
@@ -67,6 +67,7 @@ export const userLogin = (user,history) => dispatch =>{
         console.log(res)
         localStorage.setItem('token',res.data.token)
         history.push('/homepage')
+        location.reload()
         })
     .catch(err=>{
         console.log(err.response)
@@ -78,13 +79,13 @@ export const userLogout = () => dispatch =>{
     localStorage.removeItem('token')
 }
 
-// export const addCountry = (user)=> dispatch =>{
-//     dispatch({type:COUNTRY_START});
-//     axiosWithAuth()
-//     .post('',user.country.id)
-//     .then(res=>{console.log(res)})
-//     .catch(err=>console.log(err))
-// }
+export const updateUserTest = (sampleUser) => dispatch =>{
+    dispatch({type:USER_UPDATE_START})
+    axios
+    .put('https://reqres.in/api/users/2',sampleUser)
+    .then(res=>{console.log(res)})
+    .catch(err=>console.log(err.response))
+}
 
 export const getCountry = (user)=> dispatch =>{
     dispatch({type:COUNTRY_START});
@@ -126,10 +127,10 @@ export const postCommunity = (id,com) => dispatch =>{
     .catch(err=>{dispatch({type:COMMUNITY_POST_FAIL, payload:err.response})})
 }
 
-export const updateUser = (user) => dispatch =>{
+export const updateUser = (id,user) => dispatch =>{
     dispatch({type:USER_UPDATE_START})
     axiosWithAuth()
-    .put('',user)
+    .put(`${id}`,user)
     .then(res=>console.log(res))
     .catch(err=>console.log(err.response))
 }
