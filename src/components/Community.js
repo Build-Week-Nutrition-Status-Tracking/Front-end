@@ -63,48 +63,46 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Community({location, getChild, children}) {
+function Community({location, getChild, children, addChild, match}) {
   //get users country ID and compare that to the country id we are in
   //mock data
+  console.log(match)
+  console.log(location.state)
+  const [editField, setEditField] = useState({edit:false,id:''})
+  console.log(editField)
   const community = (location.state.community)
+  const newKid ={
+  child_name: "uzias",
+  parent_name: "bill",
+  contact_info: "123",
+  gender: "male",
+  date_of_screening: "1/1/2019",
+  height: "62",
+  weight: "200",
+  date_of_birth:'1/1/2019'}
+  
+const [kidObj, setKidObj] = useState({})
+
+
+  const changeHandler = e =>{
+    e.preventDefault()
+    setKidObj({...kidObj, [e.target.name]:e.target.value})
+  }
+
   useEffect(()=>{
     getChild(community.id)
+    // addChild(newKid, community.id)
+    
   },[])
-  
+
+console.log(kidObj)
+
+  console.log('this is the children format',children)
   const userId = 0;
   const CountryId = 0;
   let user = {
     admin: true
   };
-  // const [children, setChildren] = useState([
-  //   {
-  //     communityId: "1",
-  //     childId: "1",
-  //     userCountryId: "1",
-  //     name: "Patricia Bugg",
-  //     gender: "female",
-  //     height: 147,
-  //     weight: 40,
-  //     parentName: "Kiehl Bugg",
-  //     birthday: "07/06/2010",
-  //     contactInfo: "304 834 5834",
-  //     screenDate: ["04/05/2019", "03/04/2019"]
-  //   },
-  //   {
-  //     communityId: "2",
-  //     childId: "2",
-  //     userCountryId: "2",
-  //     name: "Rie Act II",
-  //     gender: "male",
-  //     height: 120,
-  //     weight: 50,
-  //     parentName: "Rie Act",
-  //     birthday: "03/06/2010",
-  //     contactInfo: "438 483 7447",
-  //     screenDate: ["02/05/2019", "03/09/2019"]
-  //   }
-  // ]);
-  
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -121,7 +119,7 @@ function Community({location, getChild, children}) {
           <Container maxWidth="sm">
             <div className={classes.heroButtons}>
               {user.admin ? (
-                <AddChild addChild={addChild}/>
+                <AddChild addChild={addChild} id={community.id}/>
               ) : (
                 <></>
               )}
@@ -141,6 +139,18 @@ function Community({location, getChild, children}) {
                     image="https://cdn.dribbble.com/users/1044993/screenshots/6797235/sea-otter_dribbble.png"
                     title="Image title"
                   />
+                  {(editField.edit&&(child.id===editField.id))?<CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">Name: 
+                  <input name='child_name' value={kidObj.child_name} onChange={(e)=>changeHandler(e)}></input>
+                    </Typography>
+                    <Typography>DOB: <input name='date_of_birth' value={kidObj.date_of_birth} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Parent: <input name='parent_name' value={kidObj.parent_name} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Contact info: <input name='contact_info' value={kidObj.contact_info} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Typography>Height: <input name='height' value={kidObj.height} onChange={(e)=>changeHandler(e)}></input>cm</Typography>
+                    <Typography>Weight: <input name='weight' value={kidObj.weight} onChange={(e)=>changeHandler(e)}></input>kg</Typography>
+                    <Typography>Screening: <input name='date_of_screening' value={kidObj.date_of_screening} onChange={(e)=>changeHandler(e)}></input></Typography>
+                    <Button onClick={()=>{}}>Confirm Edit</Button>
+                  </CardContent>:
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {child.child_name}
@@ -151,18 +161,19 @@ function Community({location, getChild, children}) {
                     <Typography>Height: {child.height}cm</Typography>
                     <Typography>Weight: {child.weight}kg</Typography>
                     <Typography>Screening: {child.date_of_screening}</Typography>
-                  </CardContent>
+                  </CardContent>}
                   <CardActions>
                     <Button size="small" color="primary">
                       <Link href={`/child/${child.id}`}>View</Link>
                     </Button>
-                    {CountryId === userId ? (
-                      <Button size="small" color="primary">
+                      <Button onClick={()=>{
+                        setEditField({edit:!editField.edit, id:child.id})
+                        setKidObj({...child})
+                    }}
+                    size="small" color="primary">
                         Edit
                       </Button>
-                    ) : (
-                      <></>
-                    )}
+                   
                   </CardActions>
                 </Card>
               </Grid>

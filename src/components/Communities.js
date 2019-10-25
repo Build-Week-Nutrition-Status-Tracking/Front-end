@@ -9,7 +9,6 @@ import Loader from 'react-loader-spinner'
 
 
 const Communities = ({history, match, communities, getCommunity, isFetching, postCommunity, community}) => {
-  const [com, setCom] = useState([])
   const currentCountryId = match.params.id
   useEffect(()=>{
     getCommunity(currentCountryId)// gets country from backend
@@ -49,9 +48,8 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
       ))}
       
         <AddCommunityForm
-          setCommunities={setCom}
-          communities={com}
           postCommunity={postCommunity}
+          id={currentCountryId}
         />
     </div>)
   

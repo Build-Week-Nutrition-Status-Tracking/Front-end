@@ -49,7 +49,9 @@ export const registerUser = (user, history) => dispatch =>{
         history.push('/signin')
         })
     .catch(err=>{console.log(err.response)
-        dispatch({type:SIGN_UP_FAIL, payload: err})})
+        dispatch({type:SIGN_UP_FAIL, payload: err})
+        history.push('/signin')
+    })
 }
 
 export const userLogin = (user,history) => dispatch =>{
@@ -111,11 +113,11 @@ export const getCommunity = (id)=> dispatch =>{
     .catch(err=>{dispatch({type:COMMUNITY_FAIL, payload:err.response})})
 }
 
-export const postCommunity = (id) => dispatch =>{
+export const postCommunity = (id,com) => dispatch =>{
     // not working get more information on this
     dispatch({type:COMMUNITY_POST_START});
     axiosWithAuth()
-    .post(`/screenings/country/${id}/communities`)
+    .post(`/screenings/country/${id}/communities`,com)
     .then(res=>{console.log(res)
     dispatch({type:COMMUNITY_POST_SUCCESS, payload:res.data})})
     .catch(err=>{dispatch({type:COMMUNITY_POST_FAIL, payload:err.response})})
@@ -149,10 +151,14 @@ export const deleteChild = (user) => dispatch =>{
 }
 
 export const addChild = (id, child) => dispatch =>{
+    //id is for community'
+    console.log('hello')
     dispatch({type:ADD_CHILD_START})
     axiosWithAuth()
-    .get(`/screenings/communities/${id}/kids`,child)
-    .then(res=>console.log(res))
+    .post(`/screenings/communities/${id}/kids`,child)
+    .then(res=>{
+        // dispatch({type:ADD_CHILD_SUCCESS, payload:res})
+        console.log(res)})
     .catch(err=>console.log(err.response))
 }
 

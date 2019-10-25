@@ -13,21 +13,12 @@ import UserTest from "./components/UserTest";
 function App() {
   return (
     <div className="App">
-      {localStorage.getItem("token") ? (
-        <div
-          onClick={() => {
-            localStorage.removeItem("token");
-          }}
-        >
-          Logout
-        </div>
-      ) : (
-        <>
-          <Link to="/signin">Sign In</Link> <br />
-          <Link to="/signup">Sign Up</Link>
-          <br />
-        </>
-      )}
+      {localStorage.getItem('token')?<><Link to='/signin' onClick={()=>{localStorage.removeItem('token')}}>Logout</Link><br></br></>:<>
+        <Link to="/signin">Sign In</Link> <br />
+        <Link to="/signup">Sign Up</Link>
+        <br />
+      </>}
+
       <Link to="/homepage">Home Page</Link>
       <br />
       <Route exact path="/signin" component={Signin}></Route>
