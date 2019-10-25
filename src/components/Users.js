@@ -49,10 +49,7 @@ const Users = ({ users, error, getUsers }) => {
   }));
 
   const classes = useStyles();
-  const boolean = [
-    { label: "true", value: true },
-    { label: "false", value: false }
-  ];
+  const boolean = [{ admin: 1, value: "true" }, { admin: 0, value: "false" }];
   // const handleSubmit =(e)=>{
   //     e.preventDefault()
   //     admin?console.log('null'):console.log(country)
@@ -92,18 +89,13 @@ const Users = ({ users, error, getUsers }) => {
                 className={classes.textField}
                 value={boolean.value}
                 onChange={handleChange("currency")}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu
-                  }
-                }}
                 helperText="Grant Administrative Privileges"
                 margin="normal"
                 variant="outlined"
               >
                 {boolean.map(option => (
-                  <MenuItem key={option.label} value={option.label}>
-                    {option.label}
+                  <MenuItem key={option.value} value={option.admin}>
+                    {option.value}
                   </MenuItem>
                 ))}
               </TextField>
@@ -114,11 +106,6 @@ const Users = ({ users, error, getUsers }) => {
                 className={classes.textField}
                 value={users[user.id - 1].user_country_id}
                 onChange={handleChange()}
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu
-                  }
-                }}
                 helperText="Choose Country for User"
                 margin="normal"
                 variant="outlined"
