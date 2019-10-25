@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import AddChild from "./AddChild";
-import {getChild, addChild, deleteChild} from '../actions/index'
+import {getChild, addChild, deleteChild, updateChild} from '../actions/index'
 import {connect} from 'react-redux' 
 
 function Copyright() {
@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Community({location, getChild, children, addChild, deleteChild, match}) {
+function Community({location, getChild, children, addChild, deleteChild, updateChild, match}) {
   //get users country ID and compare that to the country id we are in
   //mock data
   console.log(match)
@@ -149,7 +149,7 @@ console.log(kidObj)
                     <Typography>Height: <input name='height' value={kidObj.height} onChange={(e)=>changeHandler(e)}></input>cm</Typography>
                     <Typography>Weight: <input name='weight' value={kidObj.weight} onChange={(e)=>changeHandler(e)}></input>kg</Typography>
                     <Typography>Screening: <input name='date_of_screening' value={kidObj.date_of_screening} onChange={(e)=>changeHandler(e)}></input></Typography>
-                    <br/><Button onClick={()=>{}}>Confirm Edit</Button>
+                    <br/><Button onClick={()=>{updateChild(kidObj)}}>Confirm Edit</Button>
                   </CardContent>:
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -198,4 +198,4 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps,{getChild, addChild, deleteChild})(Community)
+export default connect(mapStateToProps,{getChild, addChild, deleteChild, updateChild})(Community)

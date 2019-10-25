@@ -20,6 +20,9 @@ export const CHILD_FAIL = 'CHILD_FAIL'
 export const ADD_CHILD_START = 'ADD_CHILD_START'
 export const ADD_CHILD_SUCCESS = 'ADD_CHILD_SUCCESS'
 export const ADD_CHILD_FAIL = 'ADD_CHILD_FAIL'
+export const UPDATE_CHILD_START = 'UPDATE_CHILD_START'
+export const UPDATE_CHILD_SUCCESS = 'UPDATE_CHILD_SUCCESS'
+export const UPDATE_CHILD_FAIL = 'UPDATE_CHILD_FAIL'
 export const COMMUNITY_START = 'COMMUNITY_START'
 export const COMMUNITY_SUCCESS = 'COMMUNITY_SUCCESS'
 export const COMMUNITY_FAIL = 'COMMUNITY_FAIL'
@@ -171,4 +174,15 @@ export const getChild = (id) => dispatch =>{
     .catch(err=>{
         dispatch({type:CHILD_FAIL, payload:err.response})})
 }
+
+export const updateChild = (id) => dispatch =>{
+    dispatch({type:UPDATE_CHILD_START})
+    axiosWithAuth()
+    .put(`/screenings/communities/${id}/kids`)
+    .then(res=>{
+        dispatch({type:UPDATE_CHILD_SUCCESS, payload:res.data})})
+    .catch(err=>{
+        dispatch({type:UPDATE_CHILD_FAIL, payload:err.response})})
+}
+
 
