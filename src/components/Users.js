@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getUsers, setCountry } from "../actions/index";
+import { getUsers, setCountry, updateUser, updateUserTest } from "../actions/index";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -10,9 +10,16 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-const Users = ({ users, error, getUsers }) => {
+import styled from 'styled-components'
+
+const AllUsers = styled.div`
+.centerMe{
+  justify-content: center;
+}
+`
+
+const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
   //axios call to get users --> display their Id, name, admin, country_code
-  console.log(users);
   useEffect(() => {
     getUsers();
   }, []);
@@ -24,11 +31,11 @@ const Users = ({ users, error, getUsers }) => {
     { id: 4, country: "Peru" },
     { id: 5, country: "Mexico" }
   ]);
-  const [countryId, setCountryId] = useState();
-
+  const [updatedUser, setUpdatedUser] = useState({admin: 1, user_country_id: 2});
   const useStyles = makeStyles(theme => ({
     container: {
       display: "flex",
+      // justifyContent: "center",
       flexWrap: "wrap"
     },
     card: {
@@ -53,22 +60,18 @@ const Users = ({ users, error, getUsers }) => {
     { label: "true", value: true },
     { label: "false", value: false }
   ];
-  // const handleSubmit =(e)=>{
-  //     e.preventDefault()
-  //     admin?console.log('null'):console.log(country)
-  // }
   const handleChange = name => event => {
     // setCountryId(event.target.value);
     // setAdmin(event.target.value);
   };
   return (
-    <div>
+    <AllUsers>
       <AppBar position="relative">
         <Typography variant="h6" color="inherit" align="center">
           Users
         </Typography>
       </AppBar>
-      <Grid container spacing={4}>
+      <Grid className='centerMe'container spacing={4}>
         {users.map(user => (
           <>
             <Box border={1} borderRadius="3%" m={1} p={1}>
@@ -136,32 +139,18 @@ const Users = ({ users, error, getUsers }) => {
                 color="primary"
                 onClick={e => {
                   e.preventDefault();
-                  admin ? console.log("null") : console.log(e);
+                  updateUser(1, updatedUser)
                 }}
                 className={classes.submit}
               >
                 Submit Changes
               </Button>
             </Box>
-            {/* <form>
-                        <label> Grant Administrative Privileges<br/>
-                            <select onChange={(e)=>{handleChange(e)}}>
-                                <option>false</option>
-                                <option>true</option>
-                            </select>
-                        </label> */}
-            {/* {admin?<select disabled>
-                            <option>-</option>)
-                        </select>:<select onChange={(e)=>{setCountry(e.target.value)}}>
-                            {countries.map(country=>
-                                <option>{country}</option>)}
-                        </select>}
-                        <button onClick={handleSubmit}>Save Changes</button>
-                    </form> */}
           </>
         ))}{" "}
+        <Button type="submit" fullWidth variant="contained" color="primary" onClick={()=>{updateUserTest({name:'uzias',job:'lambda'})}}>Update Sample</Button>
       </Grid>
-    </div>
+    </AllUsers>
   );
 };
 const mapStateToProps = state => {
@@ -174,5 +163,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getUsers }
+  { getUsers, updateUser, updateUserTest }
 )(Users);

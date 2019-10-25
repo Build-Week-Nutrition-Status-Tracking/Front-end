@@ -10,16 +10,11 @@ import Countries from "./components/Countries";
 import Users from "./components/Users";
 import PrivateRoute from "./components/PrivateRoute";
 import UserTest from "./components/UserTest";
+import Navbar from './components/Navbar'
 function App() {
   return (
     <div className="App">
-      {localStorage.getItem('token')?<><Link to='/signin' onClick={()=>{localStorage.removeItem('token')}}>Logout</Link><br></br></>:<>
-        <Link to="/signin">Sign In</Link> <br />
-        <Link to="/signup">Sign Up</Link>
-        <br />
-      </>}
-
-      <Link to="/homepage">Home Page</Link>
+      <Navbar/>
       <br />
       <Route exact path="/signin" component={Signin}></Route>
       <Route path="/signup" component={SignUp} />

@@ -20,6 +20,9 @@ export const CHILD_FAIL = 'CHILD_FAIL'
 export const ADD_CHILD_START = 'ADD_CHILD_START'
 export const ADD_CHILD_SUCCESS = 'ADD_CHILD_SUCCESS'
 export const ADD_CHILD_FAIL = 'ADD_CHILD_FAIL'
+export const UPDATE_CHILD_START = 'UPDATE_CHILD_START'
+export const UPDATE_CHILD_SUCCESS = 'UPDATE_CHILD_SUCCESS'
+export const UPDATE_CHILD_FAIL = 'UPDATE_CHILD_FAIL'
 export const COMMUNITY_START = 'COMMUNITY_START'
 export const COMMUNITY_SUCCESS = 'COMMUNITY_SUCCESS'
 export const COMMUNITY_FAIL = 'COMMUNITY_FAIL'
@@ -54,7 +57,7 @@ export const registerUser = (user, history) => dispatch =>{
     })
 }
 
-export const userLogin = (user,history) => dispatch =>{
+export const userLogin = (user,history, location) => dispatch =>{
     dispatch({type:LOGIN_START});
     console.log('login action')
     axiosWithAuth()
@@ -64,6 +67,7 @@ export const userLogin = (user,history) => dispatch =>{
         console.log(res)
         localStorage.setItem('token',res.data.token)
         history.push('/homepage')
+        location.reload()
         })
     .catch(err=>{
         console.log(err.response)
@@ -75,13 +79,13 @@ export const userLogout = () => dispatch =>{
     localStorage.removeItem('token')
 }
 
-// export const addCountry = (user)=> dispatch =>{
-//     dispatch({type:COUNTRY_START});
-//     axiosWithAuth()
-//     .post('',user.country.id)
-//     .then(res=>{console.log(res)})
-//     .catch(err=>console.log(err))
-// }
+export const updateUserTest = (sampleUser) => dispatch =>{
+    dispatch({type:USER_UPDATE_START})
+    axios
+    .put('https://reqres.in/api/users/2',sampleUser)
+    .then(res=>{console.log(res)})
+    .catch(err=>console.log(err.response))
+}
 
 export const getCountry = (user)=> dispatch =>{
     dispatch({type:COUNTRY_START});
@@ -123,10 +127,10 @@ export const postCommunity = (id,com) => dispatch =>{
     .catch(err=>{dispatch({type:COMMUNITY_POST_FAIL, payload:err.response})})
 }
 
-export const updateUser = (user) => dispatch =>{
+export const updateUser = (id,user) => dispatch =>{
     dispatch({type:USER_UPDATE_START})
     axiosWithAuth()
-    .put('',user)
+    .put(`${id}`,user)
     .then(res=>console.log(res))
     .catch(err=>console.log(err.response))
 }
@@ -142,12 +146,24 @@ export const getUsers = (user) => dispatch =>{
     .catch(err=>dispatch({type:USER_FAIL, payload:err.response}))
 }
 
-export const deleteChild = (user) => dispatch =>{
+export const deleteChild = (id) => dispatch =>{
     dispatch({type:DELETE_CHILD_START})
     axiosWithAuth()
-    .delete('',user)
-    .then(res=>console.log(res))
-    .catch(err=>console.log(err.response))
+    .delete(`/screenings/kids/${id}`)
+    .then(res=>{
+        console.log(res)
+        dispatch({type:DELETE_CHILD_SUCCESS, payload:res.data})})
+    .catch(err=>{
+        console.log(err.response)
+        dispatch({type:DELETE_CHILD_ERROR, payload:err.response})
+    })
+}
+
+export const deleteSampleUser = (id) =>{
+    axios
+    .delete('https://reqres.in/api/users/2')
+    .get(res=>console.log(res))
+    .then(err=>console.log(err.response))
 }
 
 export const addChild = (id, child) => dispatch =>{
@@ -171,3 +187,15 @@ export const getChild = (id) => dispatch =>{
     .catch(err=>{
         dispatch({type:CHILD_FAIL, payload:err.response})})
 }
+
+export const updateChild = (id) => dispatch =>{
+    dispatch({type:UPDATE_CHILD_START})
+    axiosWithAuth()
+    .put(`/screenings/communities/${id}/kids`)
+    .then(res=>{
+        dispatch({type:UPDATE_CHILD_SUCCESS, payload:res.data})})
+    .catch(err=>{
+        dispatch({type:UPDATE_CHILD_FAIL, payload:err.response})})
+}
+
+

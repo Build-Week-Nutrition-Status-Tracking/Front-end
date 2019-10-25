@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SignInSide({userLogin, history}) {
+function SignInSide({userLogin, history, location}) {
   if (localStorage.getItem('token')){
     history.push('/homepage')
   }
@@ -111,8 +111,8 @@ function SignInSide({userLogin, history}) {
               variant="contained"
               color="primary"
               onClick={(e)=>{
-                e.preventDefault()
-                userLogin(newUser, history)}}
+              e.preventDefault()
+              userLogin(newUser, history, location)}}
               className={classes.submit}
             >
               Sign In
