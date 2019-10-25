@@ -86,9 +86,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Community({location, getChild, children, addChild, deleteChild, updateChild, match}) {
+function Community({location, getChild, children, addChild, deleteChild, updateChild, match, deleteSampleUser}) {
   //get users country ID and compare that to the country id we are in
   //mock data
+  const [kidObj, setKidObj] = useState({})
+  const changeHandler = e =>{
+    e.preventDefault()
+    setKidObj({...kidObj, [e.target.name]:e.target.value})
+  }
   console.log(match)
   console.log(location.state)
   const [editField, setEditField] = useState({edit:false,id:''})
@@ -128,6 +133,19 @@ console.log(child)
                     image="https://cdn.dribbble.com/users/1044993/screenshots/6797235/sea-otter_dribbble.png"
                     title="Image title"
                   />
+                  {editField.edit&&(child.id===editField.id)?<CardContent>
+          <Typography gutterBottom variant="h5" component="h2">Name: 
+          <input name='child_name' value={kidObj.child_name} onChange={(e)=>changeHandler(e)}></input>
+            </Typography>
+            <Typography>DOB: <input name='date_of_birth' value={kidObj.date_of_birth} onChange={(e)=>changeHandler(e)}></input></Typography>
+            <Typography>Parent: <input name='parent_name' value={kidObj.parent_name} onChange={(e)=>changeHandler(e)}></input></Typography>
+            <Typography>Contact info: <input name='contact_info' value={kidObj.contact_info} onChange={(e)=>changeHandler(e)}></input></Typography>
+            <Typography>Height: <input name='height' value={kidObj.height} onChange={(e)=>changeHandler(e)}></input>cm</Typography>
+            <Typography>Weight: <input name='weight' value={kidObj.weight} onChange={(e)=>changeHandler(e)}></input>kg</Typography>
+            <Typography>Screening: <input name='date_of_screening' value={kidObj.date_of_screening} onChange={(e)=>changeHandler(e)}></input></Typography>
+            <br/><Button onClick={()=>{console.log(kidObj)
+              updateChild(child.id,kidObj)}}>Confirm Edit</Button>
+          </CardContent>:
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {child.child_name}
@@ -138,18 +156,22 @@ console.log(child)
                     <Typography>Height: {child.height}cm</Typography>
                     <Typography>Weight: {child.weight}kg</Typography>
                     <Typography>Screening: {child.date_of_screening}</Typography>
-                  </CardContent>
+                  </CardContent>}
                   <CardActions>
                     <Button size="small" color="primary">
                       <Link href={`/child/${child.id}`}>View</Link>
                     </Button>
+                    <Button onClick={()=>{
+                        setEditField({edit:!editField.edit, id:child.id})
+                        setKidObj({...child})
+                    }}
+                    size="small" color="primary">
+                        Edit
+                      </Button>
                       <Button size="small" color="primary" onClick={()=>{deleteChild(child.id)
-                      getChild()
+                      getChild(community.id)
                       }}>
                        Delete
-                    </Button>
-                    <Button size="small" color="primary" onClick={()=>{deleteChild(child.id)}}>
-                       Sample Delete
                     </Button>
                   </CardActions>
                 </Card>
@@ -166,12 +188,13 @@ console.log(child)
                 <input name="height"
                   onChange={(event)=>{setChild({ ...child, [event.target.name]: Number(event.target.value) });}} placeholder="Height" value={child.height}></input>
                 <input name="date_of_screening" onChange={handleChange} placeholder="Screen Date" value={child.screenDate}></input>
-                <input name="date_of_birth" onChange={handleChange} placeholder="DOB" value={child.screenDate}></input>
+                <input name="date_of_birth" onChange={handleChange} placeholder="DOB" value={child.screenDate}></input>              
               </div>
               <button
                 onClick={e => {
                   e.preventDefault()
                   addChild(community.id, child);
+                  getChild(community.id)
                 }}
               >
                 Add Child
@@ -195,20 +218,9 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps,{getChild, addChild, deleteChild, updateChild})(Community)
+export default connect(mapStateToProps,{getChild, addChild, deleteChild, updateChild, deleteSampleUser})(Community)
 
-//{(editField.edit&&(child.id===editField.id))?<CardContent>
-{/* <Typography gutterBottom variant="h5" component="h2">Name: 
-<input name='child_name' value={kidObj.child_name} onChange={(e)=>changeHandler(e)}></input>
-  </Typography>
-  <Typography>DOB: <input name='date_of_birth' value={kidObj.date_of_birth} onChange={(e)=>changeHandler(e)}></input></Typography>
-  <Typography>Parent: <input name='parent_name' value={kidObj.parent_name} onChange={(e)=>changeHandler(e)}></input></Typography>
-  <Typography>Contact info: <input name='contact_info' value={kidObj.contact_info} onChange={(e)=>changeHandler(e)}></input></Typography>
-  <Typography>Height: <input name='height' value={kidObj.height} onChange={(e)=>changeHandler(e)}></input>cm</Typography>
-  <Typography>Weight: <input name='weight' value={kidObj.weight} onChange={(e)=>changeHandler(e)}></input>kg</Typography>
-  <Typography>Screening: <input name='date_of_screening' value={kidObj.date_of_screening} onChange={(e)=>changeHandler(e)}></input></Typography>
-  <br/><Button onClick={()=>{updateChild(kidObj)}}>Confirm Edit</Button>
-</CardContent>: */}
+
 
 {/* <Button onClick={()=>{
     setEditField({edit:!editField.edit, id:child.id})

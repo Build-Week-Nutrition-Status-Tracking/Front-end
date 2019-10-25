@@ -24,7 +24,7 @@ const Communities = ({history, match, communities, getCommunity, isFetching, pos
           <div
             onClick={() => {
               history.push({
-                pathname: `/country/${currentCountryId}/${community.name}`,
+                pathname: `/country/${currentCountryId}/${community.id}`,
                 state:{community}
               });
             }}

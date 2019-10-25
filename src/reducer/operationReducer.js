@@ -163,7 +163,8 @@ export default function operationReducer(state=initialState, action){
         return({
             ...state,
             isFetching:false,
-            error:''
+            error:'',
+            children:[...action.payload]
         })
         case(UPDATE_CHILD_FAIL):
         return({

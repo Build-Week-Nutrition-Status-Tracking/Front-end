@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getUsers, setCountry, updateUser, updateUserTest } from "../actions/index";
+import { getUsers, setCountry, updateUser, updateUserTest, getCountry } from "../actions/index";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -18,20 +18,22 @@ const AllUsers = styled.div`
 }
 `
 
-const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
+const Users = ({ users, error, getUsers, updateUser, updateUserTest, getCountry,countries }) => {
   //axios call to get users --> display their Id, name, admin, country_code
+  console.log(countries)
   useEffect(() => {
     getUsers();
+    getCountry();
   }, []);
   const [admin, setAdmin] = useState(false);
-  const [countries, setCountries] = useState([
-    { id: 1, country: "United States" },
-    { id: 2, country: "China" },
-    { id: 3, country: "Ghana" },
-    { id: 4, country: "Peru" },
-    { id: 5, country: "Mexico" }
-  ]);
-  const [updatedUser, setUpdatedUser] = useState({admin: 1, user_country_id: 2});
+  // const [countries, setCountries] = useState([
+  //   { id: 1, country: "United States" },
+  //   { id: 2, country: "China" },
+  //   { id: 3, country: "Ghana" },
+  //   { id: 4, country: "Peru" },
+  //   { id: 5, country: "Mexico" }
+  // ]);
+  const [updatedUser, setUpdatedUser] = useState({admin: 1, user_country_id: 1});
   const useStyles = makeStyles(theme => ({
     container: {
       display: "flex",
@@ -127,7 +129,7 @@ const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
                 variant="outlined"
               >
                 {countries.map(option => (
-                  <MenuItem key={option.id} value={option.id}>
+                  <MenuItem key={option.id} value={option.id} onChange={()=>{setUpdatedUser({...updatedUser, user_country_id:option.id})}}>
                     {option.country}
                   </MenuItem>
                 ))}
@@ -139,7 +141,7 @@ const Users = ({ users, error, getUsers, updateUser, updateUserTest }) => {
                 color="primary"
                 onClick={e => {
                   e.preventDefault();
-                  updateUser(1, updatedUser)
+                  updateUser(user.id, updatedUser)
                 }}
                 className={classes.submit}
               >
@@ -157,11 +159,12 @@ const mapStateToProps = state => {
   return {
     ...state,
     users: state.operation.users,
-    error: state.operation.error
+    error: state.operation.error,
+    countries: state.operation.countries
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getUsers, updateUser, updateUserTest }
+  { getUsers, updateUser, updateUserTest,getCountry }
 )(Users);

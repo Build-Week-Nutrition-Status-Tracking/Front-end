@@ -119,9 +119,10 @@ export const getCommunity = (id)=> dispatch =>{
 
 export const postCommunity = (id,com) => dispatch =>{
     // not working get more information on this
+    const obj = {...com, country_id: Number(id)}
     dispatch({type:COMMUNITY_POST_START});
     axiosWithAuth()
-    .post(`/screenings/country/${id}/communities`,com)
+    .post(`/screenings/country/${id}/communities`,obj)
     .then(res=>{console.log(res)
     dispatch({type:COMMUNITY_POST_SUCCESS, payload:res.data})})
     .catch(err=>{dispatch({type:COMMUNITY_POST_FAIL, payload:err.response})})
@@ -130,7 +131,7 @@ export const postCommunity = (id,com) => dispatch =>{
 export const updateUser = (id,user) => dispatch =>{
     dispatch({type:USER_UPDATE_START})
     axiosWithAuth()
-    .put(`${id}`,user)
+    .put(`/user/${id}`,user)
     .then(res=>console.log(res))
     .catch(err=>console.log(err.response))
 }
@@ -168,10 +169,11 @@ export const deleteSampleUser = (id) =>{
 
 export const addChild = (id, child) => dispatch =>{
     //id is for community'
+    const newChild = {...child, community_id:Number(id)}
     console.log('hello')
     dispatch({type:ADD_CHILD_START})
     axiosWithAuth()
-    .post(`/screenings/communities/${id}/kids`,child)
+    .post(`/screenings/communities/${id}/kids`,newChild)
     .then(res=>{
         // dispatch({type:ADD_CHILD_SUCCESS, payload:res})
         console.log(res)})
@@ -188,13 +190,16 @@ export const getChild = (id) => dispatch =>{
         dispatch({type:CHILD_FAIL, payload:err.response})})
 }
 
-export const updateChild = (id) => dispatch =>{
+export const updateChild = (id, updatedChild) => dispatch =>{
+    console.log('updatedChild',updatedChild, id)
     dispatch({type:UPDATE_CHILD_START})
     axiosWithAuth()
-    .put(`/screenings/communities/${id}/kids`)
+    .put(`/screenings/kids/${id}`,updatedChild)
     .then(res=>{
+        console.log('update', res)
         dispatch({type:UPDATE_CHILD_SUCCESS, payload:res.data})})
     .catch(err=>{
+        console.log('update fail', err.response)
         dispatch({type:UPDATE_CHILD_FAIL, payload:err.response})})
 }
 
