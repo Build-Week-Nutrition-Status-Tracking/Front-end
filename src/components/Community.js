@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from 'styled-components'
 import AddChild from "./AddChild";
-import {getChild, addChild, deleteChild, updateChild} from '../actions/index'
+import {getChild, addChild, deleteChild, updateChild, deleteSampleUser} from '../actions/index'
 import {connect} from 'react-redux' 
 
 const FormStyle = styled.form`
@@ -143,8 +143,13 @@ console.log(child)
                     <Button size="small" color="primary">
                       <Link href={`/child/${child.id}`}>View</Link>
                     </Button>
-                      <Button size="small" color="primary" onClick={()=>{deleteChild(child.id)}}>
+                      <Button size="small" color="primary" onClick={()=>{deleteChild(child.id)
+                      getChild()
+                      }}>
                        Delete
+                    </Button>
+                    <Button size="small" color="primary" onClick={()=>{deleteChild(child.id)}}>
+                       Sample Delete
                     </Button>
                   </CardActions>
                 </Card>

@@ -150,8 +150,20 @@ export const deleteChild = (id) => dispatch =>{
     dispatch({type:DELETE_CHILD_START})
     axiosWithAuth()
     .delete(`/screenings/kids/${id}`)
-    .then(res=>console.log(res))
-    .catch(err=>console.log(err.response))
+    .then(res=>{
+        console.log(res)
+        dispatch({type:DELETE_CHILD_SUCCESS, payload:res.data})})
+    .catch(err=>{
+        console.log(err.response)
+        dispatch({type:DELETE_CHILD_ERROR, payload:err.response})
+    })
+}
+
+export const deleteSampleUser = (id) =>{
+    axios
+    .delete('https://reqres.in/api/users/2')
+    .get(res=>console.log(res))
+    .then(err=>console.log(err.response))
 }
 
 export const addChild = (id, child) => dispatch =>{
